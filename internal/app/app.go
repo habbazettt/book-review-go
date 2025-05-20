@@ -1,20 +1,22 @@
 package app
 
 import (
-	"log"
+	"fmt"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
 
 func Run() {
-	r := gin.Default()
+	router := gin.Default()
 
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{"message": "pong"})
-	})
+	// Register routes (akan kita buat nanti)
+	// RegisterRoutes(router)
 
-	err := r.Run(":8080")
-	if err != nil {
-		log.Fatal("Failed to run server: ", err)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
 	}
+
+	router.Run(fmt.Sprintf(":%s", port))
 }
