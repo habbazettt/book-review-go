@@ -1,0 +1,38 @@
+services:
+  bookreview_backend:
+    build:
+      context: .
+      dockerfile: development.Dockerfile
+    container_name: bookreview_backend
+    restart: always
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    networks:
+      - bookreview_network
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16
+    container_name: bookreview_db
+    restart: always
+    ports:
+      - "5433:5432"
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - bookreview_db:/var/lib/postgresql/data
+    networks:
+      - bookreview_network
+
+networks:
+  bookreview_network:
+
+volumes:
+  bookreview_db:

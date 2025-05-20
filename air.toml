@@ -1,0 +1,15 @@
+root = "."
+
+[build]
+cmd = "go build -o ./tmp/main ."
+bin = "./tmp/main"
+dir = "."
+include_ext = ["go"]
+exclude_dir = ["vendor", "tmp"]
+run_after_build = "chmod +x ./tmp/main"
+
+poll = true
+poll_interval = 1
+
+[log]
+level = "debug"
